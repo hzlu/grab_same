@@ -1,0 +1,27 @@
+{
+  "name": "grab_same",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "babel-node src",
+    "test": "eslint src && jest --coverage",
+    "precommit": "yarn test",
+    "prepush": "yarn test"
+  },
+  "dependencies": {
+    "axios": "^0.16.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-jest": "^21.0.0",
+    "babel-preset-env": "^1.6.0",
+    "eslint": "^4.6.1",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.1.0",
+    "husky": "^0.14.3",
+    "jest": "^21.0.1"
+  }
+}
