@@ -4,7 +4,7 @@ import { searchChannel, fetchChannelDetail, fetchSenses } from './fetchSame';
 const Channel = class {
   static search(name) {
     const searchUrl = `/channel/search?query=${querystring.escape(name)}`;
-    searchChannel(searchUrl);
+    return searchChannel(searchUrl);
   }
 
   constructor(channelId) {
@@ -14,12 +14,16 @@ const Channel = class {
     this.nextSenses = '';
   }
 
+  setNext(next) {
+    this.nextSenses = next;
+  }
+
   detail() {
     return fetchChannelDetail(this.detailUrl);
   }
 
   senses() {
-    return fetchSenses(this.sensesUrl);
+    return fetchSenses(this.nextSenses || this.sensesUrl, this);
   }
 };
 

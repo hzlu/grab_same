@@ -36,9 +36,9 @@ const downloadImage = ({ url, createdAt }) => {
 };
 
 const parallelDownload = async (photos) => {
-  for (const photo of photos) {
-    await downloadImage(photo);
-  }
+  photos.forEach((photo) => {
+    downloadImage(photo);
+  });
 };
 
 const main = (url) => {

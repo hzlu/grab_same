@@ -8,12 +8,16 @@ const User = class {
     this.nextSenses = '';
   }
 
-  profile() {
-    fetchUserProfile(this.profileUrl);
+  setNext(next) {
+    this.nextSenses = next;
+  }
+
+  detail() {
+    return fetchUserProfile(this.profileUrl);
   }
 
   senses() {
-    fetchSenses(this.sensesUrl);
+    return fetchSenses(this.nextSenses || this.sensesUrl, this);
   }
 };
 
