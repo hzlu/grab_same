@@ -10,7 +10,9 @@
     "prepush": "yarn test"
   },
   "dependencies": {
-    "axios": "^0.16.2"
+    "axios": "^0.16.2",
+    "cli-table2": "^0.2.0",
+    "dateformat": "^2.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
