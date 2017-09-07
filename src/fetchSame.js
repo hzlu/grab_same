@@ -39,6 +39,8 @@ const fetchSame = (url) => {
   return promise;
 };
 
+export default fetchSame;
+
 export const searchChannel = async (url) => {
   const { results } = await fetchSame(url);
   const table = new Table({
@@ -58,7 +60,7 @@ export const searchChannel = async (url) => {
   console.log(table.toString());
 };
 
-export const fetchChannelDetail = async (url) => {
+export const printChannelDetail = async (url) => {
   const data = await fetchSame(url);
   const {
     id,
@@ -85,7 +87,7 @@ export const fetchChannelDetail = async (url) => {
   return Promise.resolve();
 };
 
-export const fetchUserProfile = async (url) => {
+export const printUserProfile = async (url) => {
   const { user } = await fetchSame(url);
   const {
     id,
@@ -116,7 +118,7 @@ export const fetchUserProfile = async (url) => {
   return Promise.resolve();
 };
 
-export const fetchSenses = async (url, entity) => {
+export const printSenses = async (url, entity) => {
   const { results, next } = await fetchSame(url);
 
   const table = new Table({

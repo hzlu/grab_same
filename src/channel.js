@@ -1,5 +1,10 @@
 import querystring from 'querystring';
-import { searchChannel, fetchChannelDetail, fetchSenses } from './fetchSame';
+import backupMedia from './backupMedia';
+import {
+  searchChannel,
+  printChannelDetail,
+  printSenses,
+} from './fetchSame';
 
 const Channel = class {
   static search(name) {
@@ -19,11 +24,15 @@ const Channel = class {
   }
 
   detail() {
-    return fetchChannelDetail(this.detailUrl);
+    return printChannelDetail(this.detailUrl);
   }
 
   senses() {
-    return fetchSenses(this.nextSenses || this.sensesUrl, this);
+    return printSenses(this.nextSenses || this.sensesUrl, this);
+  }
+
+  backup() {
+    return backupMedia(this.sensesUrl);
   }
 };
 

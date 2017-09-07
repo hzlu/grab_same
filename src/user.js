@@ -1,4 +1,8 @@
-import { fetchUserProfile, fetchSenses } from './fetchSame';
+import backupMedia from './backupMedia';
+import {
+  printUserProfile,
+  printSenses,
+} from './fetchSame';
 
 const User = class {
   constructor(userId) {
@@ -13,11 +17,15 @@ const User = class {
   }
 
   detail() {
-    return fetchUserProfile(this.profileUrl);
+    return printUserProfile(this.profileUrl);
   }
 
   senses() {
-    return fetchSenses(this.nextSenses || this.sensesUrl, this);
+    return printSenses(this.nextSenses || this.sensesUrl, this);
+  }
+
+  backup() {
+    return backupMedia(this.sensesUrl);
   }
 };
 

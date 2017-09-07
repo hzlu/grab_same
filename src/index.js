@@ -12,8 +12,10 @@ const usage = () => {
 *) 搜索频道 c/channel -s <name>
 *) 查看频道 c/channel -i <id>
 *) 频道内容 c/channel -c <id>
+*) 备份频道 c/channel -b <id>
 *) 查看用户 u/user -i <id>
 *) 用户内容 u/user -c <id>
+*) 备份用户 u/user -b <id>
 *) 更多内容 n/next/m/more
 *) 退出     q/quit
 *) 帮助     h/help
@@ -27,6 +29,9 @@ const handleChannel = async (option, value) => {
   } else if (option === '-c') {
     entity = new Channel(value);
     await entity.senses();
+  } else if (option === '-b') {
+    entity = new Channel(value);
+    await entity.backup();
   } else if (option === '-s') {
     await Channel.search(value);
   } else {
@@ -41,6 +46,9 @@ const handleUser = async (option, value) => {
   } else if (option === '-c') {
     entity = new User(value);
     await entity.senses();
+  } else if (option === '-b') {
+    entity = new User(value);
+    await entity.backup();
   } else {
     usage();
   }
