@@ -2,6 +2,13 @@
 
 A command line client for [SAME](https://same.com/) app.
 
+## installing
+
+```bash
+$ npm install -g hello_same
+$ hello_same
+```
+
 ## Usage
 
 search channel
