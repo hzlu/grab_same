@@ -1,7 +1,9 @@
 {
   "name": "hello_same",
-  "version": "1.0.0",
+  "version": "0.1.0",
+  "description": "a command line client for SAME app",
   "main": "index.js",
+  "author": "Lu Haozhao",
   "license": "MIT",
   "scripts": {
     "start": "babel-node src",
@@ -9,6 +11,10 @@
     "build": "rimraf lib && babel src -d lib --ignore .test.js",
     "precommit": "yarn test",
     "prepush": "yarn test && yarn build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hzlu/hello_same.git"
   },
   "dependencies": {
     "axios": "^0.16.2",
