@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "a command line client for SAME app",
   "main": "index.js",
-  "author": "Lu Haozhao",
+  "author": "hzlu2010@gmail.com",
   "license": "MIT",
   "scripts": {
     "start": "babel-node src",
@@ -11,6 +11,9 @@
     "build": "rimraf lib && babel src -d lib --ignore .test.js",
     "precommit": "yarn test",
     "prepush": "yarn test && yarn build"
+  },
+  "bin": {
+    "hello_same": "./bin/hello_same"
   },
   "repository": {
     "type": "git",

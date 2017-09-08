@@ -102,4 +102,4 @@ rl.on('resume', () => {
   rl.prompt();
 });
 
-rl.prompt();
+export default rl;
