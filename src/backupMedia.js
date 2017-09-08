@@ -44,7 +44,8 @@ const backupMedia = (url) => {
   fetchSame(url)
     .then((data) => {
       const { results, next } = data;
-      const photos = results.filter(r => !!r.photo && r.user.sex === 0);
+      // const photos = results.filter(r => !!r.photo && r.user.sex === 0);
+      const photos = results.filter(r => !!r.photo);
 
       parallelDownload(photos)
         .then(() => {

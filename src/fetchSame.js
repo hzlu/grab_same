@@ -13,12 +13,9 @@ const headers = {
   Authorization: 'Token 1498622484-RRGVIp61gJXcGlEk-1123919',
 };
 
-const mydateFormat = (timestamp) => { dateFormat(new Date(timestamp * 1000), 'yyyy-mm-dd HH:MM:ss'); };
+const mydateFormat = (timestamp => dateFormat(new Date(timestamp * 1000), 'yyyy-mm-dd HH:MM:ss'));
 
-const sexAlias = (sex) => {
-  const cn = sex === 0 ? '女' : '男';
-  return cn;
-};
+const sexAlias = (sex => (sex === 0 ? '女' : '男'));
 
 const fetchSame = (url) => {
   const promise = new Promise((resolve, reject) => {
