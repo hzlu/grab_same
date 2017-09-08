@@ -34,16 +34,14 @@ const downloadMedia = ({ src: url, subDir, senseId }) => {
   });
 };
 
+/* eslint-disable */
 const parallelDownload = async (senses) => {
-  // for (const sense of senses) {
-  //   await downloadMedia(sense);
-  // }
-  // return Promise.resolve();
-
-  const promises = senses.map(sense => downloadMedia(sense));
-  const result = await Promise.all(promises);
-  return Promise.resolve(result);
+  for (const sense of senses) {
+    await downloadMedia(sense);
+  }
+  return Promise.resolve();
 };
+/* eslint-enable */
 
 const backupMedia = async (url) => {
   const promise = new Promise((resolve, reject) => {
@@ -70,18 +68,21 @@ const backupMedia = async (url) => {
             if (next) {
               /* eslint-disable no-console */
               console.log('\nNext page ...\n');
-              backupMedia(next);
-            } else {
-              /* eslint-disable no-console */
-              console.log('Finish backup 🎉 ');
-              resolve();
             }
+            resolve(next);
           })
           .catch(err => reject(err));
       })
       .catch(err => reject(err));
   });
-  return promise;
+
+  const n = await promise;
+  if (n) {
+    await backupMedia(n);
+  }
+  /* eslint-disable no-console */
+  console.log('Finish backup 🎉 ');
+  return Promise.resolve();
 };
 
 export default backupMedia;
