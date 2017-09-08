@@ -1,20 +1,19 @@
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import axios from 'axios';
+import mkdir from './mkdir';
 import fetchSame from './fetchSame';
 
-const downloadDir = path.resolve(__dirname, '../download');
+const sameDir = path.resolve(os.homedir(), 'same_media');
 
-// TODO Recursive mkdir
-try {
-  fs.statSync(downloadDir);
-} catch (e) {
-  fs.mkdirSync(downloadDir);
-}
+const downloadMedia = ({ src: url, subDir, senseId }) => {
+  const extname = path.extname(url);
+  const downloadDir = path.resolve(sameDir, subDir);
+  mkdir(downloadDir);
 
-const downloadImage = ({ photo: url, created_at: createdAt }) => {
   /* eslint-disable no-console */
-  console.log(`begin to download: ${url}`);
+  console.log(`✈️  Begin  download ${url}`);
 
   return new Promise((resolve, reject) => {
     axios({
@@ -24,10 +23,10 @@ const downloadImage = ({ photo: url, created_at: createdAt }) => {
     })
       .then((response) => {
         const stream = response.data
-          .pipe(fs.createWriteStream(`${downloadDir}/${createdAt}.jpg`));
+          .pipe(fs.createWriteStream(`${downloadDir}/${senseId}${extname}`));
         stream.on('finish', () => {
           /* eslint-disable no-console */
-          console.log('finish download');
+          console.log('🍺  Finish download  ');
           resolve();
         });
       })
@@ -35,30 +34,54 @@ const downloadImage = ({ photo: url, created_at: createdAt }) => {
   });
 };
 
-const parallelDownload = async (photos) => {
-  const promises = photos.map(photo => downloadImage(photo));
-  return Promise.all(promises);
+const parallelDownload = async (senses) => {
+  // for (const sense of senses) {
+  //   await downloadMedia(sense);
+  // }
+  // return Promise.resolve();
+
+  const promises = senses.map(sense => downloadMedia(sense));
+  const result = await Promise.all(promises);
+  return Promise.resolve(result);
 };
 
-const backupMedia = (url) => {
-  fetchSame(url)
-    .then((data) => {
-      const { results, next } = data;
-      // const photos = results.filter(r => !!r.photo && r.user.sex === 0);
-      const photos = results.filter(r => !!r.photo);
+const backupMedia = async (url) => {
+  const promise = new Promise((resolve, reject) => {
+    fetchSame(url)
+      .then((data) => {
+        const subDir = url.slice(1).split('/', 2).join('_');
+        const { results, next } = data;
+        const mediaSenses = results
+          .map((r) => {
+            const {
+              photo,
+              media,
+              id: senseId,
+            } = r;
+            const src = photo
+              || (media && media.sound && media.sound.src)
+              || (media && media.video && media.video.src);
+            return { src, senseId, subDir };
+          })
+          .filter(item => !!item.src);
 
-      parallelDownload(photos)
-        .then(() => {
-          if (next) {
-            /* eslint-disable no-console */
-            console.log('下一页...');
-            backupMedia(next);
-          } else {
-            /* eslint-disable no-console */
-            console.log('备份结束');
-          }
-        });
-    });
+        parallelDownload(mediaSenses)
+          .then(() => {
+            if (next) {
+              /* eslint-disable no-console */
+              console.log('\nNext page ...\n');
+              backupMedia(next);
+            } else {
+              /* eslint-disable no-console */
+              console.log('Finish backup 🎉 ');
+              resolve();
+            }
+          })
+          .catch(err => reject(err));
+      })
+      .catch(err => reject(err));
+  });
+  return promise;
 };
 
 export default backupMedia;
