@@ -2,7 +2,7 @@
   "name": "hello_same",
   "version": "0.1.0",
   "description": "a command line client for SAME app",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "author": "hzlu2010@gmail.com",
   "license": "MIT",
   "scripts": {
