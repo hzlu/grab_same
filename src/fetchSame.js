@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Table from 'cli-table2';
+import Table from 'cli-table3';
 import dateFormat from 'dateformat';
 
 const baseURL = 'https://v2.same.com';
